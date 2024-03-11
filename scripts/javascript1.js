@@ -69,9 +69,10 @@ $('.js-add-to-cart').on('click', function()  {
          })
 
      }
-     
+     const cartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+ 
 
-     console.log(cart)
+     $('.js-cart-quantity').html(cartQuantity);
    
  
 });

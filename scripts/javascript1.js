@@ -1,5 +1,5 @@
 
- let productsHTML = '';
+let productsHTML = '';
 products.forEach((product) =>
 {
     productsHTML += `
@@ -22,11 +22,11 @@ products.forEach((product) =>
             </div>
 
             <div class="product-price">
-        ${(product.priceCents/100).toFixed(2)}
+         $  ${(product.priceCents/100).toFixed(2)}
             </div>
 
             <div class="product-quantity-container">
-            <select>
+            <select >
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -42,7 +42,7 @@ products.forEach((product) =>
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
+            <div class="added-to-cart " >
             <img src="images/icons/checkmark.png">
             Added
             </div>
@@ -55,24 +55,51 @@ products.forEach((product) =>
 
 
 $('.js-container').html(productsHTML);
-$('.js-add-to-cart').on('click', function()  {
-     const productId = $(this).data("product-id");
-     const existingProduct = cart.find(item => item.productId === productId)
+$('.js-add-to-cart').on('click', function() {
+    const productId = $(this).data("product-id");
+    console.log(productId);
+    const existingProduct = cart.find(item => item.productId === productId);
+
+    const quantitySelector = $(this).closest('.product-container').find('select');
    
-     if(existingProduct){
-        existingProduct.quantity +=1;
-     }
-     else{
+    const quantity = Number(quantitySelector.val());
+    
+    const $addedToCart = $(this).closest('.product-container').find('.added-to-cart');
+    
+    
+    $(this).closest('.product-container').find('.added-to-cart').css('opacity', 1);
+
+    
+    clearTimeout($(this).data('timeoutId'));
+
+   
+    const timeoutId = setTimeout(() => {
+     $(this).closest('.product-container').find('.added-to-cart').css('opacity', 0);
+    }, 2000);
+
+  
+    $(this).data('timeoutId', timeoutId);
+
+
+
+
+
+
+   
+
+
+
+
+
+    if (existingProduct) {
+        existingProduct.quantity += quantity;
+    } else {
         cart.push({
-            productId: productId,
-            quantity : 1
-         })
+            productId,
+            quantity
+        });
+    }
 
-     }
-     const cartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
- 
-
-     $('.js-cart-quantity').html(cartQuantity);
-   
- 
+    const cartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    $('.js-cart-quantity').html(cartQuantity);
 });

@@ -47,7 +47,7 @@ products.forEach((product) =>
             Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id=' ${product.id}'>
             Add to Cart
             </button>
         </div>`;
@@ -55,3 +55,23 @@ products.forEach((product) =>
 
 
 $('.js-container').html(productsHTML);
+$('.js-add-to-cart').on('click', function()  {
+     const productId = $(this).data("product-id");
+     const existingProduct = cart.find(item => item.productId === productId)
+   
+     if(existingProduct){
+        existingProduct.quantity +=1;
+     }
+     else{
+        cart.push({
+            productId: productId,
+            quantity : 1
+         })
+
+     }
+     
+
+     console.log(cart)
+   
+ 
+});

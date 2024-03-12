@@ -56,16 +56,19 @@ products.forEach((product) =>
 
 
 $('.js-container').html(productsHTML);
+
+
+
+
 $('.js-add-to-cart').on('click', function() {
     const productId = $(this).data("product-id");
-    console.log(productId);
-    const existingProduct = cart.find(item => item.productId === productId);
+    
 
     const quantitySelector = $(this).closest('.product-container').find('select');
    
     const quantity = Number(quantitySelector.val());
     
-    const $addedToCart = $(this).closest('.product-container').find('.added-to-cart');
+ 
     
     
     $(this).closest('.product-container').find('.added-to-cart').css('opacity', 1);
@@ -90,6 +93,7 @@ $('.js-add-to-cart').on('click', function() {
 
 
 
+    const existingProduct = cart.find(item => item.productId === productId);
 
 
     if (existingProduct) {
